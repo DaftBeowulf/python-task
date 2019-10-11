@@ -4,6 +4,9 @@ import json
 # load imdb library for cast name verification
 from imdb import IMDb, IMDbError
 
+# load sys for arg parsing
+import sys
+
 # open movies.json and load it into python list
 input_file = open('data/movies.json')
 movies = json.load(input_file)
@@ -67,6 +70,10 @@ def assemble_pseduo_verified_cast(movie_list):
 
     # output length: 55019
 
-# assemble_verified_cast(movies[:250])
-# assemble_cast(movies)
-assemble_pseduo_verified_cast(movies) 
+if __name__ == '__main__':
+    if len(sys.argv) > 1 and 'pseudo' in sys.argv:
+        assemble_pseduo_verified_cast(movies) 
+    elif len(sys.argv) > 1 and 'valid' in sys.argv:
+        assemble_verified_cast(movies[:250]) #only run first 250 entries to verify functionality
+    else:
+        assemble_cast(movies)
