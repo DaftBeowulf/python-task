@@ -9,7 +9,6 @@ input_file = open('data/movies.json')
 movies = json.load(input_file)
 
 
-
 def assemble_cast(movie_list):
     cast_dict = {}
 
@@ -24,7 +23,6 @@ def assemble_cast(movie_list):
     for key in sorted(cast_dict.keys()):
         print(f'{key},{cast_dict[key]}')
     # length of output: 55484
-
 
 
 def assemble_verified_cast(movie_list):
@@ -53,5 +51,22 @@ def assemble_verified_cast(movie_list):
     # unknown length of full output due to exceptional runtime
 
 
-assemble_verified_cast(movies[:250])
+def assemble_pseduo_verified_cast(movie_list):
+    cast_dict = {}
+
+    for movie in movie_list:
+        for member in movie["cast"]:
+            key=f'{member},{movie["year"]}'
+            if key in cast_dict:
+                cast_dict[key] += 1
+            elif member[0].isupper() or member == 'will.i.am':
+                cast_dict[key]=1
+
+    for key in sorted(cast_dict.keys()):
+        print(f'{key},{cast_dict[key]}')
+
+    # output length: 55019
+
+# assemble_verified_cast(movies[:250])
 # assemble_cast(movies)
+assemble_pseduo_verified_cast(movies) 
